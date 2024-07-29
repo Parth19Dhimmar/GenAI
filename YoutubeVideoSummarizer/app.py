@@ -21,7 +21,7 @@ you need to summrize providing important information in points. Give out the res
 
 4. provide proper explaination as per the information provided in the transcript.
 
-5. In the end provide simple 2-3 line short summary of whole video transcript as conclusion.
+5. In the end provide simple 2-3 line short summary of whole video transcript.
 
 The transcript will be provided here : """
 
@@ -32,7 +32,7 @@ def get_video_id(video_url):
 
 def get_transcript(video_id):
 
-    transcript_data = YouTubeTranscriptApi.get_transcript(video_id, languages = ['en'])    #can give list of video ids if want to fetch youtube transcript from multiple videos
+    transcript_data = YouTubeTranscriptApi.get_transcript(video_id, languages = ['en', 'hi', 'gu', 'mr'])    #can give list of video ids if want to fetch youtube transcript from multiple videos
     #with st.expander("transcript"):
         #st.write(transcript_data)
     transcript = ""
@@ -49,15 +49,12 @@ def gemini_content_generation(video_transcript, prompt):
 st.set_page_config("Youtube Video Summarizer")
 st.title("Youtube Video Summarizer ✍🏼📋")
 
-input = st.text_input("Enter your video url here!")
+input = st.text_input("Enter youtube video url here!")
 if input:
     video_id = get_video_id(input)
     st.image(f"http://img.youtube.com/vi/{video_id}/0.jpg")
 
 if st.button("Get Summary"):
-    st.markdown("## :green[Summary]")
     transcript = get_transcript(video_id)
     response = gemini_content_generation(transcript, prompt)
     st.write(response)
-
-
